@@ -99,7 +99,7 @@
     function starMouseOut(star) {
       star.addEventListener('mouseout', function(e) {
         if (stars.indexOf(e.relatedTarget) === -1) {
-          setRating(null, false);
+          setRating(null, false, e);
         }
       });
     }
@@ -113,7 +113,7 @@
     function starClick(star) {
       star.addEventListener('click', function(e) {
         e.preventDefault();
-        setRating(parseInt(star.getAttribute('data-index')) + 1, true);
+        setRating(parseInt(star.getAttribute('data-index')) + 1, true, e);
       });
     }
 
@@ -126,7 +126,7 @@
      * @param {Boolean} doCallback A boolean to determine whether to run the
      *   callback or not
      */
-    function setRating(value, doCallback) {
+    function setRating(value, doCallback, ev) {
       if (value && value < 0 || value > maxRating) { return; }
       if (doCallback === undefined) { doCallback = true; }
 
@@ -140,7 +140,7 @@
         }
       });
 
-      if (callback && doCallback) { callback(getRating()); }
+      if (callback && doCallback) { callback(getRating(), ev); }
     }
 
     /**
