@@ -92,11 +92,14 @@ var currentRating = 0;
 // max rating, i.e. number of stars you want
 var maxRating= 5;
 
+// config 
+var config = { unsetable: true };
+
 // callback to run after setting the rating
 var callback = function(rating) { alert(rating); };
 
 // rating instance
-var myRating = rating(el, currentRating, maxRating, callback);
+var myRating = rating(el, currentRating, maxRating, config, callback);
 ```
 
 The `rating` instance takes the following 4 arguments:
@@ -104,7 +107,12 @@ The `rating` instance takes the following 4 arguments:
 1. `el` - The element to which we want to append the rating to.
 2. `currentRating` - The current rating in question. This is important, because it's likely you'll be pulling your data from a database. In that case, you can set up the rating with a default value by passing in the correct `currentRating` value.
 3. `maxRating` - The maximum number of stars to be included in the widget.
-4. `callback` - The callback function to run after the rating gets set. It's very likely that you'll want to do some sort of persistent storage update after you set the rating, and the callback allows you to do that. The callback accepts one argument, `rating`, which is the updated rating value.
+4. `config` - The config object
+5. `callback` - The callback function to run after the rating gets set. It's very likely that you'll want to do some sort of persistent storage update after you set the rating, and the callback allows you to do that. The callback accepts one argument, `rating`, which is the updated rating value.
+
+The `config`-Object supports the following setting:
+
+- `unsetable`: when true sets the currentRating to zero when the same rating is set twice. 
 
 ### Public Methods
 
@@ -130,6 +138,10 @@ myRating.getRating();
 ```
 
 ## Author
+
+Martin Fischer <arthur.spooner@gmail.com>
+
+## Forked from the original project by
 
 Nick Salloum <nick@callmenick.com>
 

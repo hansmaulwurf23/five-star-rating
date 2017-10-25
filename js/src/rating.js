@@ -9,10 +9,11 @@
    * @param {HTMLElement} el The HTMl element to build the rating widget on
    * @param {Number} currentRating The current rating value
    * @param {Number} maxRating The max rating for the widget
+   * @param {Object} config
    * @param {Function} callback The optional callback to run after set rating
    * @return {Object} Some public methods
    */
-  function rating(el, currentRating, maxRating, callback) {
+  function rating(el, currentRating, maxRating, config, callback) {
     
     /**
      * stars
@@ -127,10 +128,14 @@
      *   callback or not
      */
     function setRating(value, doCallback, ev) {
-      if (value && value < 0 || value > maxRating) { return; }
+      if (value && (value < 0 || value > maxRating)) { return; }
       if (doCallback === undefined) { doCallback = true; }
 
-      currentRating = value || currentRating;
+      if (config && config.unsetable && value == currentRating) {
+          currentRating = 0;
+      } else {
+          currentRating = value || currentRating;
+      }
 
       iterate(stars, function(star, index) {
         if (index < currentRating) {
